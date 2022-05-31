@@ -44,24 +44,15 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
       )
-<<<<<<< HEAD
       //.teams(new TeamPlatform(account), new TeamApplication("teamA", account));
       .teams()
       
-=======
-      .teams(new TeamPlatform(account), new TeamApplication("teamA", account));
-
->>>>>>> master
     const repoUrl =
       "https://github.com/aws-samples/eks-blueprints-workloads.git";
 
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
-<<<<<<< HEAD
-      targetRevision: "bb-containers-capstone",
-=======
       targetRevision: "workshop",
->>>>>>> master
     };
 
     // HERE WE GENERATE THE ADDON CONFIGURATIONS
@@ -98,11 +89,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         stages: [
           {
             id: "dev",
-<<<<<<< HEAD
-            stackBuilder: blueprint.clone("us-east-1").addOns(devBootstrapArgo),
-=======
             stackBuilder: blueprint.clone("us-west-2").addOns(devBootstrapArgo),
->>>>>>> master
           }, // HERE WE ADD OUR NEW ADDON WITH THE CONFIGURED ARGO CONFIGURATIONS
           {
             id: "test",
@@ -113,11 +100,7 @@ export default class BbContainersCapstonePipeline extends Construct {
           {
             id: "prod",
             stackBuilder: blueprint
-<<<<<<< HEAD
-              .clone("us-west-2")
-=======
               .clone("us-east-1")
->>>>>>> master
               .addOns(prodBootstrapArgo),
           }, // HERE WE ADD OUR NEW ADDON WITH THE CONFIGURED ARGO CONFIGURATIONS
         ],
