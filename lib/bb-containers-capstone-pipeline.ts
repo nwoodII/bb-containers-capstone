@@ -98,7 +98,6 @@ export default class BbContainersCapstonePipeline extends Construct {
             id: "test",
             stackBuilder: blueprint
               .clone("us-east-2")
-              .account(account)              
               .addOns(testBootstrapArgo),
           }//, 
           // {
