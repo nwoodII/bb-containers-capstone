@@ -9,7 +9,7 @@ export default class BbContainersCapstonePipeline extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id);
 
-    const account = props?.env?.account!;
+    const account = process.env.CDK_DEFAULT_ACCOUNT!;
     const region = props?.env?.region!;
 
     const mgnClusterProviderProps = {
@@ -46,13 +46,14 @@ export default class BbContainersCapstonePipeline extends Construct {
       )
       //.teams(new TeamPlatform(account), new TeamApplication("teamA", account));
       .teams()
-      
-    const repoUrl =
-      "https://github.com/aws-samples/eks-blueprints-workloads.git";
 
+    const repoUrl = "https://github.com/nwoodII/bb-containers-capstone.git";
+    
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
-      targetRevision: "workshop",
+      credentialsSecretName: "github-token-nwoodII",
+      credentialsType: 'TOKEN',
+      targetRevision: 'main'
     };
 
     // HERE WE GENERATE THE ADDON CONFIGURATIONS
@@ -89,20 +90,25 @@ export default class BbContainersCapstonePipeline extends Construct {
         stages: [
           {
             id: "dev",
-            stackBuilder: blueprint.clone("us-west-2").addOns(devBootstrapArgo),
-          }, // HERE WE ADD OUR NEW ADDON WITH THE CONFIGURED ARGO CONFIGURATIONS
+            stackBuilder: blueprint
+            .clone("us-east-1")
+            .account(account)
+            .addOns(devBootstrapArgo),
+          }, 
           {
             id: "test",
             stackBuilder: blueprint
               .clone("us-east-2")
+              .account(account)              
               .addOns(testBootstrapArgo),
-          }, // HERE WE ADD OUR NEW ADDON WITH THE CONFIGURED ARGO CONFIGURATIONS
+          }, 
           {
             id: "prod",
             stackBuilder: blueprint
-              .clone("us-east-1")
+              .clone("us-west-2") 
+              .account(account)              
               .addOns(prodBootstrapArgo),
-          }, // HERE WE ADD OUR NEW ADDON WITH THE CONFIGURED ARGO CONFIGURATIONS
+          }, 
         ],
       })
       .build(scope, id + "-stack", props);
