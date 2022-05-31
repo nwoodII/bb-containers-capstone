@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-//import BbContainersCapstoneStack  from '../lib/bb-containers-capstone-stack';
+import BbContainersCapstoneStack  from '../lib/bb-containers-capstone-stack';
 import BbContainersCapstonePipeline from '../lib/bb-containers-capstone-pipeline';
 
 const app = new cdk.App();
