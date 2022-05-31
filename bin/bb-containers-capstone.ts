@@ -9,4 +9,5 @@ const account = process.env.CDK_DEFAULT_ACCOUNT;
 const region = process.env.CDK_DEFAULT_REGION;
 const env = { account, region };
 
-new BbContainersCapstoneStack(app, 'BbContainersCapstoneStack', { env });
+//new BbContainersCapstoneStack(app, 'BbContainersCapstoneStack', { env });
+new BbContainersCapstonePipeline(app, 'BbContainersCapstonePipeline', { env });
