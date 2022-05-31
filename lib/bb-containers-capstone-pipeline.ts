@@ -69,12 +69,12 @@ export default class BbContainersCapstonePipeline extends Construct {
         path: "envs/test",
       },
     });
-    // const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
-    //   bootstrapRepo: {
-    //     ...bootstrapRepo,
-    //     path: "envs/prod",
-    //   },
-    // });
+    const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
+      bootstrapRepo: {
+        ...bootstrapRepo,
+        path: "envs/prod",
+      },
+    });
 
     blueprints.CodePipelineStack.builder()
       .name("bb-containers-capstone-pipeline")
@@ -99,14 +99,14 @@ export default class BbContainersCapstonePipeline extends Construct {
             stackBuilder: blueprint
               .clone("us-east-2")
               .addOns(testBootstrapArgo),
-          }//, 
-          // {
-          //   id: "prod",
-          //   stackBuilder: blueprint
-          //     .clone("us-west-2") 
-          //     .account(account)              
-          //     .addOns(prodBootstrapArgo),
-          // }, 
+          }, 
+          {
+            id: "prod",
+            stackBuilder: blueprint
+              .clone("us-west-2") 
+              .account(account)              
+              .addOns(prodBootstrapArgo),
+          }, 
         ],
       })
       .build(scope, id + "-stack", props);
