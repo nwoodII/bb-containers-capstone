@@ -63,18 +63,18 @@ export default class BbContainersCapstonePipeline extends Construct {
         path: "envs/dev",
       },
     });
-    const testBootstrapArgo = new blueprints.ArgoCDAddOn({
-      bootstrapRepo: {
-        ...bootstrapRepo,
-        path: "envs/test",
-      },
-    });
-    const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
-      bootstrapRepo: {
-        ...bootstrapRepo,
-        path: "envs/prod",
-      },
-    });
+    // const testBootstrapArgo = new blueprints.ArgoCDAddOn({
+    //   bootstrapRepo: {
+    //     ...bootstrapRepo,
+    //     path: "envs/test",
+    //   },
+    // });
+    // const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
+    //   bootstrapRepo: {
+    //     ...bootstrapRepo,
+    //     path: "envs/prod",
+    //   },
+    // });
 
     blueprints.CodePipelineStack.builder()
       .name("bb-containers-capstone-pipeline")
@@ -94,21 +94,21 @@ export default class BbContainersCapstonePipeline extends Construct {
             .clone("us-east-1")
             .account(account)
             .addOns(devBootstrapArgo),
-          }, 
-          {
-            id: "test",
-            stackBuilder: blueprint
-              .clone("us-east-2")
-              .account(account)              
-              .addOns(testBootstrapArgo),
-          }, 
-          {
-            id: "prod",
-            stackBuilder: blueprint
-              .clone("us-west-2") 
-              .account(account)              
-              .addOns(prodBootstrapArgo),
-          }, 
+          }//, 
+          // {
+          //   id: "test",
+          //   stackBuilder: blueprint
+          //     .clone("us-east-2")
+          //     .account(account)              
+          //     .addOns(testBootstrapArgo),
+          // }, 
+          // {
+          //   id: "prod",
+          //   stackBuilder: blueprint
+          //     .clone("us-west-2") 
+          //     .account(account)              
+          //     .addOns(prodBootstrapArgo),
+          // }, 
         ],
       })
       .build(scope, id + "-stack", props);
