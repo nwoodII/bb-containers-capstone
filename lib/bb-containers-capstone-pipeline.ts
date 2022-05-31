@@ -53,7 +53,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       repoUrl,
       credentialsSecretName: "github-token-nwoodII",
       credentialsType: 'TOKEN',
-      targetRevision: 'main'
+      targetRevision: 'master'
     };
 
     // HERE WE GENERATE THE ADDON CONFIGURATIONS
@@ -82,7 +82,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       .repository({
         repoUrl: "bb-containers-capstone",
         credentialsSecretName: "github-token-nwoodII",
-        targetRevision: "main",
+        targetRevision: "master",
       })
       // WE ADD THE STAGES IN WAVE FROM THE PREVIOUS CODE
       .wave({
