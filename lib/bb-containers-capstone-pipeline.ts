@@ -47,7 +47,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       //.teams(new TeamPlatform(account), new TeamApplication("teamA", account));
       .teams()
 
-    const repoUrl = "https://github.com/nwoodII/bb-containers-capstone.git";
+    const repoUrl = "bb-containers-capstone";
     
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
@@ -92,7 +92,6 @@ export default class BbContainersCapstonePipeline extends Construct {
             id: "dev",
             stackBuilder: blueprint
             .clone("us-east-1")
-            .account(account)
             .addOns(devBootstrapArgo),
           }//, 
           // {
