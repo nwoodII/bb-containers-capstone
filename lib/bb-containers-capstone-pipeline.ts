@@ -9,7 +9,7 @@ export default class BbContainersCapstonePipeline extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id);
 
-    const account = process.env.CDK_DEFAULT_ACCOUNT!;
+    const account = props?.env?.account!;
     const region = props?.env?.region!;
 
     const mgnClusterProviderProps = {
@@ -44,9 +44,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
       )
-      .teams(new TeamPlatform(account));
-      //.teams(new TeamPlatform(account), new TeamApplication("teamA", account));
-      //.teams()
+      .teams(new TeamPlatform(account), new TeamApplication("team-mims", account));
 
     const repoUrl = "bb-containers-capstone";
     
