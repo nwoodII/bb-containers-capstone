@@ -44,8 +44,9 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
       )
+      .teams(new TeamPlatform(account));
       //.teams(new TeamPlatform(account), new TeamApplication("teamA", account));
-      .teams()
+      //.teams()
 
     const repoUrl = "bb-containers-capstone";
     
