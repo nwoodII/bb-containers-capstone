@@ -63,12 +63,12 @@ export default class BbContainersCapstonePipeline extends Construct {
         path: "envs/dev",
       },
     });
-    // const testBootstrapArgo = new blueprints.ArgoCDAddOn({
-    //   bootstrapRepo: {
-    //     ...bootstrapRepo,
-    //     path: "envs/test",
-    //   },
-    // });
+    const testBootstrapArgo = new blueprints.ArgoCDAddOn({
+      bootstrapRepo: {
+        ...bootstrapRepo,
+        path: "envs/test",
+      },
+    });
     // const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
     //   bootstrapRepo: {
     //     ...bootstrapRepo,
@@ -93,14 +93,14 @@ export default class BbContainersCapstonePipeline extends Construct {
             stackBuilder: blueprint
             .clone("us-east-1")
             .addOns(devBootstrapArgo),
+          }, 
+          {
+            id: "test",
+            stackBuilder: blueprint
+              .clone("us-east-2")
+              .account(account)              
+              .addOns(testBootstrapArgo),
           }//, 
-          // {
-          //   id: "test",
-          //   stackBuilder: blueprint
-          //     .clone("us-east-2")
-          //     .account(account)              
-          //     .addOns(testBootstrapArgo),
-          // }, 
           // {
           //   id: "prod",
           //   stackBuilder: blueprint
