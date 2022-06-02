@@ -30,7 +30,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     
     const karpenterAddonProps = {
       provisionerSpecs: {
-        'topology.kubernetes.io/zone': ['us-east-1a'],
+        'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
         'kubernetes.io/arch': ['amd64'],
         'karpenter.sh/capacity-type': ['spot']
       },
