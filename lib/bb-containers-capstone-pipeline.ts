@@ -36,12 +36,10 @@ export default class BbContainersCapstonePipeline extends Construct {
         'karpenter.sh/capacity-type': ['spot']
       },
       subnetTags: {
-        'karpenter.sh/discovery/dev-blueprint': 'dev-blueprint',
-        'karpenter.sh/discovery/Tag1': 'tag1value'
+        'karpenter.sh/discovery': 'dev-blueprint'
       },
       securityGroupsTags: {
-        'karpenter.sh/discovery/dev-blueprint': 'dev-blueprint',
-        'karpenter.sh/discovery/Tag1': 'tag1value'
+        'karpenter.sh/discovery': 'dev-blueprint'
       }
     }
 
