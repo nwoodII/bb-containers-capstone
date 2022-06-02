@@ -42,7 +42,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         'karpenter.sh/discovery': 'dev-blueprint'
       }
     }
-
+    //const addOns: Array<blueprints.ClusterAddOn> = [ vpcCniAddOn, karpenterAddOn ];
     const blueprint = blueprints.EksBlueprint.builder()
       .account(account)
       .region(region)
@@ -53,7 +53,20 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.NginxAddOn(),
         new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn(),
-        new blueprints.KarpenterAddOn(karpenterAddonProps),
+        new blueprints.KarpenterAddOn({
+      provisionerSpecs: {
+        //'amiFamily': 'Bottlerocket',
+        'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
+        'kubernetes.io/arch': ['amd64','arm64'],
+        'karpenter.sh/capacity-type': ['spot']
+      },
+      subnetTags: {
+        'karpenter.sh/discovery': 'dev-blueprint'
+      },
+      securityGroupTags: {
+        'karpenter.sh/discovery': 'dev-blueprint'
+      }
+    }),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
