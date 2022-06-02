@@ -14,10 +14,9 @@ export default class BbContainersCapstonePipeline extends Construct {
 
     const mgnClusterProviderProps = {
       amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
-      desiredSize: 4,
+      desiredSize: 1,
       instanceTypes: [
-        new ec2.InstanceType("t3.large"),
-        new ec2.InstanceType("m5.large"),
+        new ec2.InstanceType("t3.large")
       ],
       minSize: 1,
       maxSize: 10,
@@ -28,6 +27,22 @@ export default class BbContainersCapstonePipeline extends Construct {
     const clusterProvider = new blueprints.MngClusterProvider(
       mgnClusterProviderProps
     );
+    
+    const karpenterAddonProps = {
+      provisionerSpecs: {
+        'topology.kubernetes.io/zone': ['us-east-1a'],
+        'kubernetes.io/arch': ['amd64'],
+        'karpenter.sh/capacity-type': ['spot']
+      },
+      subnetTags: {
+        'karpenter.sh/discovery/MyCluster': 'Name',
+        'karpenter.sh/discovery/Tag1': 'tag1value'
+      },
+      securityGroupsTags: {
+        'karpenter.sh/discovery/MyCluster': 'Name',
+        'karpenter.sh/discovery/Tag1': 'tag1value'
+      }
+    }
 
     const blueprint = blueprints.EksBlueprint.builder()
       .account(account)
@@ -39,7 +54,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.NginxAddOn(),
         new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn(),
-        new blueprints.KarpenterAddOn(),
+        new blueprints.KarpenterAddOn(karpenterAddonProps),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
@@ -92,20 +107,20 @@ export default class BbContainersCapstonePipeline extends Construct {
             stackBuilder: blueprint
             .clone("us-east-1")
             .addOns(devBootstrapArgo),
-          }, 
-          {
-            id: "test",
-            stackBuilder: blueprint
-              .clone("us-east-2")
-              .addOns(testBootstrapArgo),
-          }, 
-          {
-            id: "prod",
-            stackBuilder: blueprint
-              .clone("us-west-2") 
-              .account(account)              
-              .addOns(prodBootstrapArgo),
-          }, 
+          }//, 
+          // {
+          //   id: "test",
+          //   stackBuilder: blueprint
+          //     .clone("us-east-2")
+          //     .addOns(testBootstrapArgo),
+          // }, 
+          // {
+          //   id: "prod",
+          //   stackBuilder: blueprint
+          //     .clone("us-west-2") 
+          //     .account(account)              
+          //     .addOns(prodBootstrapArgo),
+          // }, 
         ],
       })
       .build(scope, id + "-stack", props);
