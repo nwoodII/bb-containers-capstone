@@ -46,7 +46,6 @@ export default class BbContainersCapstonePipeline extends Construct {
     const blueprint = blueprints.EksBlueprint.builder()
       .account(account)
       .region(region)
-      .clusterProvider(clusterProvider)
       .addOns(
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
@@ -71,6 +70,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
       )
+      .clusterProvider(clusterProvider)
       .teams(new TeamPlatform(account), new TeamApplication("team-mims", account));
 
     const repoUrl = "bb-containers-capstone";
