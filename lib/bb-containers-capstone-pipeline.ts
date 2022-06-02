@@ -12,24 +12,25 @@ export default class BbContainersCapstonePipeline extends Construct {
     const account = props?.env?.account!;
     const region = props?.env?.region!;
 
-    // const mgnClusterProviderProps = {
-    //   amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
-    //   desiredSize: 1,
-    //   instanceTypes: [
-    //     new ec2.InstanceType("t3.large")
-    //   ],
-    //   minSize: 1,
-    //   maxSize: 10,
-    //   nodeGroupCapacityType: eks.CapacityType.SPOT,
-    //   version: eks.KubernetesVersion.V1_21,
-    // };
+    const mgnClusterProviderProps = {
+      amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
+      desiredSize: 1,
+      instanceTypes: [
+        new ec2.InstanceType("t3.large")
+      ],
+      minSize: 1,
+      maxSize: 10,
+      nodeGroupCapacityType: eks.CapacityType.SPOT,
+      version: eks.KubernetesVersion.V1_21,
+    };
 
-    // const clusterProvider = new blueprints.MngClusterProvider(
-    //   mgnClusterProviderProps
-    // );
+    const clusterProvider = new blueprints.MngClusterProvider(
+      mgnClusterProviderProps
+    );
     
     const karpenterAddonProps = {
       provisionerSpecs: {
+        'amiFamily': 'Bottlerocket',
         'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
         'kubernetes.io/arch': ['amd64','arm64'],
         'karpenter.sh/capacity-type': ['spot']
@@ -47,7 +48,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     const blueprint = blueprints.EksBlueprint.builder()
       .account(account)
       .region(region)
-      //.clusterProvider(clusterProvider)
+      .clusterProvider(clusterProvider)
       .addOns(
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
