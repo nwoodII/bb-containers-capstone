@@ -11,7 +11,8 @@ export default class BbContainersCapstonePipeline extends Construct {
 
     const account = props?.env?.account!;
     const region = props?.env?.region!;
-
+    
+    //TODO: Test without this cluster again
     const mgnClusterProviderProps = {
       amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
       desiredSize: 1,
@@ -30,30 +31,6 @@ export default class BbContainersCapstonePipeline extends Construct {
     
     const karpenterAddonProps = {
       provisionerSpecs: {
-        'amiFamily': 'Bottlerocket',
-        'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
-        'kubernetes.io/arch': ['amd64','arm64'],
-        'karpenter.sh/capacity-type': ['spot']
-      },
-      subnetTags: {
-        'karpenter.sh/discovery': 'dev-blueprint'
-      },
-      securityGroupsTags: {
-        'karpenter.sh/discovery': 'dev-blueprint'
-      }
-    }
-    //const addOns: Array<blueprints.ClusterAddOn> = [ vpcCniAddOn, karpenterAddOn ];
-    const blueprint = blueprints.EksBlueprint.builder()
-      .account(account)
-      .region(region)
-      .addOns(
-        new blueprints.AppMeshAddOn(),
-        new blueprints.AwsLoadBalancerControllerAddOn(),
-        new blueprints.NginxAddOn(),
-        new blueprints.CalicoAddOn(),
-        new blueprints.VpcCniAddOn(),
-        new blueprints.KarpenterAddOn({
-      provisionerSpecs: {
         //'amiFamily': 'Bottlerocket',
         'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
         'kubernetes.io/arch': ['amd64','arm64'],
@@ -65,12 +42,37 @@ export default class BbContainersCapstonePipeline extends Construct {
       securityGroupTags: {
         'karpenter.sh/discovery': 'dev-blueprint'
       }
-    }),
+    }
+    
+    const blueprint = blueprints.EksBlueprint.builder()
+      .account(account)
+      .region(region)
+      //.clusterProvider(clusterProvider) //TODO: Test without this cluster again
+      .addOns(
+        new blueprints.AppMeshAddOn(),
+        new blueprints.AwsLoadBalancerControllerAddOn(),
+        new blueprints.NginxAddOn(),
+        new blueprints.CalicoAddOn(),
+        new blueprints.VpcCniAddOn(),
+        new blueprints.KarpenterAddOn(karpenterAddonProps),
+    //     new blueprints.KarpenterAddOn({
+    //   provisionerSpecs: {
+    //     //'amiFamily': 'Bottlerocket',
+    //     'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
+    //     'kubernetes.io/arch': ['amd64','arm64'],
+    //     'karpenter.sh/capacity-type': ['spot']
+    //   },
+    //   subnetTags: {
+    //     'karpenter.sh/discovery': 'dev-blueprint'
+    //   },
+    //   securityGroupTags: {
+    //     'karpenter.sh/discovery': 'dev-blueprint'
+    //   }
+    // }),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
       )
-      .clusterProvider(clusterProvider)
       .teams(new TeamPlatform(account), new TeamApplication("team-mims", account));
 
     const repoUrl = "bb-containers-capstone";
