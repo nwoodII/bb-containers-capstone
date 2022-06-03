@@ -4,7 +4,7 @@ import * as blueprints from "@aws-quickstart/eks-blueprints";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { TeamPlatform, TeamApplication } from "../teams";
-
+//import { ClusterInfo } from 
 export default class BbContainersCapstonePipeline extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id);
@@ -32,7 +32,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     const karpenterAddonProps = {
       provisionerSpecs: {
         //'amiFamily': 'Bottlerocket',
-        'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
+        'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
         'kubernetes.io/arch': ['amd64','arm64'],
         'karpenter.sh/capacity-type': ['spot']
       },
@@ -43,11 +43,14 @@ export default class BbContainersCapstonePipeline extends Construct {
         'karpenter.sh/discovery': 'dev-blueprint'
       }
     }
+    const kaddon = new blueprints.KarpenterAddOn(karpenterAddonProps);
+    const info = blueprints.ClusterInfo;
+    //kaddon.deploy(ClusterInfo)
     
     const blueprint = blueprints.EksBlueprint.builder()
       .account(account)
       .region(region)
-      //.clusterProvider(clusterProvider) //TODO: Test without this cluster again
+      .clusterProvider(clusterProvider) //TODO: Test without this cluster again
       .addOns(
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
