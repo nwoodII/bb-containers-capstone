@@ -33,7 +33,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       provisionerSpecs: {
         //'amiFamily': 'Bottlerocket',
         'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
-        'kubernetes.io/arch': ['amd64','arm64'],
+        'kubernetes.io/arch': ['arm64'],
         'karpenter.sh/capacity-type': ['spot']
       },
       subnetTags: {
@@ -78,7 +78,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       )
       .teams(new TeamPlatform(account), new TeamApplication("team-mims", account));
 
-    const repoUrl = "bb-containers-capstone";
+    const repoUrl = "argocd-example-apps";
     
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
@@ -91,7 +91,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     const devBootstrapArgo = new blueprints.ArgoCDAddOn({
       bootstrapRepo: {
         ...bootstrapRepo,
-        path: "envs/dev",
+        path: "apps",
       },
     });
     const testBootstrapArgo = new blueprints.ArgoCDAddOn({
