@@ -82,7 +82,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
-      //credentialsSecretName: "github-token-nwoodII",
+      credentialsSecretName: "github-token-nwoodII",
       //credentialsType: 'TOKEN',
       targetRevision: 'master'
     };
