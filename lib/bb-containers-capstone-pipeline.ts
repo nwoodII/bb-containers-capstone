@@ -78,7 +78,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       )
       .teams(new TeamPlatform(account), new TeamApplication("team-mims", account));
 
-    const repoUrl = "argocd-example-apps";
+    const repoUrl = "https://github.com/nwoodII/argocd-example-apps.git";
     
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
