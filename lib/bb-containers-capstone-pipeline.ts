@@ -72,6 +72,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     //     'karpenter.sh/discovery': 'dev-blueprint'
     //   }
     // }),
+        new blueprints.EbsCsiDriverAddOn(),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
@@ -83,7 +84,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
       credentialsSecretName: "github-token-nwoodII",
-      //credentialsType: 'TOKEN',
+      credentialsType: 'TOKEN',
       targetRevision: 'master'
     };
 
