@@ -55,8 +55,8 @@ export default class BbContainersCapstonePipeline extends Construct {
         //new blueprints.EbsCsiDriverAddOn(),
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
-        //new blueprints.NginxAddOn(),
-        //new blueprints.CalicoAddOn(),
+        new blueprints.NginxAddOn(),
+        new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn(),
         new blueprints.KarpenterAddOn(karpenterAddonProps),
     //     new blueprints.KarpenterAddOn({
