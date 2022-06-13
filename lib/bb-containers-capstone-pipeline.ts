@@ -52,6 +52,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       .region(region)
       .clusterProvider(clusterProvider) //TODO: Test without this cluster again
       .addOns(
+        new blueprints.EbsCsiDriverAddOn(),
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.NginxAddOn(),
@@ -72,7 +73,6 @@ export default class BbContainersCapstonePipeline extends Construct {
     //     'karpenter.sh/discovery': 'dev-blueprint'
     //   }
     // }),
-        new blueprints.EbsCsiDriverAddOn(),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
