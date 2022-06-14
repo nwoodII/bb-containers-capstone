@@ -52,7 +52,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       .region(region)
       .clusterProvider(clusterProvider) //TODO: Test without this cluster again
       .addOns(
-        new blueprints.EbsCsiDriverAddOn(),
+        //new blueprints.EbsCsiDriverAddOn(),
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.NginxAddOn(),
