@@ -4,7 +4,7 @@ import * as blueprints from "@aws-quickstart/eks-blueprints";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { TeamPlatform, TeamApplication } from "../teams";
-//import { ClusterInfo } from 
+
 export default class BbContainersCapstonePipeline extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id);
