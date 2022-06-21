@@ -56,9 +56,9 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.NginxAddOn(),
-        //new blueprints.CalicoAddOn(),
+        new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn('v1.10.2-eksbuild.1'),
-        new blueprints.KarpenterAddOn(karpenterAddonProps),
+        //new blueprints.KarpenterAddOn(karpenterAddonProps),
     //     new blueprints.KarpenterAddOn({
     //   provisionerSpecs: {
     //     //'amiFamily': 'Bottlerocket',
