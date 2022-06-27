@@ -34,7 +34,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         //'amiFamily': 'Bottlerocket',
         'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
         'kubernetes.io/arch': ['amd64'],
-        'karpenter.sh/capacity-type': ['spot']
+        'karpenter.sh/capacity-type': ['on-demand']
       },
       subnetTags: {
         'karpenter.sh/discovery': 'dev-blueprint'
