@@ -55,7 +55,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn(),
         new blueprints.KarpenterAddOn(karpenterAddonProps),
-        new blueprints.EbsCsiDriverAddOn(),
+        //new blueprints.EbsCsiDriverAddOn(),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
