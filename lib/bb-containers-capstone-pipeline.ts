@@ -17,7 +17,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
       desiredSize: 1,
       instanceTypes: [
-        new ec2.InstanceType("t3.large")
+        new ec2.InstanceType("t3.medium")
       ],
       minSize: 1,
       maxSize: 10,
@@ -52,13 +52,13 @@ export default class BbContainersCapstonePipeline extends Construct {
       .region(region)
       .clusterProvider(clusterProvider) //TODO: Test without this cluster again
       .addOns(
-        new blueprints.EbsCsiDriverAddOn(),
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.NginxAddOn(),
         new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn('v1.10.2-eksbuild.1'),
-        //new blueprints.KarpenterAddOn(karpenterAddonProps),
+        new blueprints.KarpenterAddOn(karpenterAddonProps),
+        new blueprints.EbsCsiDriverAddOn(),
     //     new blueprints.KarpenterAddOn({
     //   provisionerSpecs: {
     //     //'amiFamily': 'Bottlerocket',
