@@ -14,7 +14,7 @@ export default class BbContainersCapstonePipeline extends Construct {
     
     //TODO: Test without this cluster again
     const mgnClusterProviderProps = {
-      //amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
+      amiType: eks.NodegroupAmiType.AL2_X86_64,
       desiredSize: 1,
       instanceTypes: [
         new ec2.InstanceType("t3.large")
