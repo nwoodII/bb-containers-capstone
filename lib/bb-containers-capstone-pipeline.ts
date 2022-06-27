@@ -17,7 +17,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
       desiredSize: 1,
       instanceTypes: [
-        new ec2.InstanceType("t3.medium")
+        new ec2.InstanceType("t3.large")
       ],
       minSize: 1,
       maxSize: 10,
@@ -31,8 +31,8 @@ export default class BbContainersCapstonePipeline extends Construct {
     
     const karpenterAddonProps = {
       provisionerSpecs: {
-        //'amiFamily': 'Bottlerocket',
-        'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
+        'node.kubernetes.io/instance-type': ['t3.large','t3.medium'],
+        'topology.kubernetes.io/zone': ['us-east-1a'],
         'kubernetes.io/arch': ['amd64'],
         'karpenter.sh/capacity-type': ['spot']
       },
@@ -43,9 +43,6 @@ export default class BbContainersCapstonePipeline extends Construct {
         'karpenter.sh/discovery': 'dev-blueprint'
       }
     }
-    const kaddon = new blueprints.KarpenterAddOn(karpenterAddonProps);
-    const info = blueprints.ClusterInfo;
-    //kaddon.deploy(ClusterInfo)
     
     const blueprint = blueprints.EksBlueprint.builder()
       .account(account)
@@ -56,23 +53,9 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.NginxAddOn(),
         new blueprints.CalicoAddOn(),
-        new blueprints.VpcCniAddOn('v1.10.2-eksbuild.1'),
+        new blueprints.VpcCniAddOn(),
         new blueprints.KarpenterAddOn(karpenterAddonProps),
         new blueprints.EbsCsiDriverAddOn(),
-    //     new blueprints.KarpenterAddOn({
-    //   provisionerSpecs: {
-    //     //'amiFamily': 'Bottlerocket',
-    //     'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b'],
-    //     'kubernetes.io/arch': ['amd64','arm64'],
-    //     'karpenter.sh/capacity-type': ['spot']
-    //   },
-    //   subnetTags: {
-    //     'karpenter.sh/discovery': 'dev-blueprint'
-    //   },
-    //   securityGroupTags: {
-    //     'karpenter.sh/discovery': 'dev-blueprint'
-    //   }
-    // }),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
