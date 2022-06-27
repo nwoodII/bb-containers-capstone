@@ -20,7 +20,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new ec2.InstanceType("t3.medium")
       ],
       minSize: 1,
-      maxSize: 10,
+      maxSize: 4,
       nodeGroupCapacityType: eks.CapacityType.SPOT,
       version: eks.KubernetesVersion.V1_21,
     };
