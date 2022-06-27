@@ -20,7 +20,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new ec2.InstanceType("t3.medium")
       ],
       minSize: 1,
-      maxSize: 4,
+      maxSize: 10,
       nodeGroupCapacityType: eks.CapacityType.SPOT,
       version: eks.KubernetesVersion.V1_21,
     };
@@ -34,7 +34,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         //'amiFamily': 'Bottlerocket',
         'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
         'kubernetes.io/arch': ['amd64'],
-        'karpenter.sh/capacity-type': ['on-demand']
+        'karpenter.sh/capacity-type': ['spot']
       },
       subnetTags: {
         'karpenter.sh/discovery': 'dev-blueprint'
