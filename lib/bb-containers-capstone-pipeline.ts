@@ -76,8 +76,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       //namespace: 'bb-apps',
       //adminPasswordSecretName: 'adminPasswordSecretName',
       bootstrapRepo: {
-        ...bootstrapRepo,
-        path: "apps",
+        ...bootstrapRepo
       },
     });
     // const testBootstrapArgo = new blueprints.ArgoCDAddOn({
