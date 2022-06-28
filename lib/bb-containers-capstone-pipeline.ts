@@ -66,30 +66,32 @@ export default class BbContainersCapstonePipeline extends Construct {
     
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
-      credentialsSecretName: "github-token-nwoodII",
+      credentialsSecretName: "github/token/argocd",
       credentialsType: 'TOKEN',
       targetRevision: 'master'
     };
 
     // HERE WE GENERATE THE ADDON CONFIGURATIONS
     const devBootstrapArgo = new blueprints.ArgoCDAddOn({
+      namespace: 'bb-apps',
+      //adminPasswordSecretName: 'adminPasswordSecretName',
       bootstrapRepo: {
         ...bootstrapRepo,
         path: "apps",
       },
     });
-    const testBootstrapArgo = new blueprints.ArgoCDAddOn({
-      bootstrapRepo: {
-        ...bootstrapRepo,
-        path: "envs/test",
-      },
-    });
-    const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
-      bootstrapRepo: {
-        ...bootstrapRepo,
-        path: "envs/prod",
-      },
-    });
+    // const testBootstrapArgo = new blueprints.ArgoCDAddOn({
+    //   bootstrapRepo: {
+    //     ...bootstrapRepo,
+    //     path: "envs/test",
+    //   },
+    // });
+    // const prodBootstrapArgo = new blueprints.ArgoCDAddOn({
+    //   bootstrapRepo: {
+    //     ...bootstrapRepo,
+    //     path: "envs/prod",
+    //   },
+    // });
 
     blueprints.CodePipelineStack.builder()
       .name("bb-containers-capstone-pipeline")
