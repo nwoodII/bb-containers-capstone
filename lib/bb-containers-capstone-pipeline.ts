@@ -95,7 +95,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       .owner("nwoodII")
       .repository({
         repoUrl: "bb-containers-capstone",
-        credentialsSecretName: "github-token-nwoodII-rotated",
+        credentialsSecretName: "github/bbcontainers/api/token",
         targetRevision: "master",
       })
       // WE ADD THE STAGES IN WAVE FROM THE PREVIOUS CODE
