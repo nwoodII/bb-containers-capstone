@@ -51,6 +51,11 @@ export default class BbContainersCapstonePipeline extends Construct {
             securityGroupTags: {
               'karpenter.sh/discovery': 'dev-blueprint'
             },
+            taints: [{
+               key: "workload",
+               value: "test",
+               effect: "PreferNoSchedule",
+            }],
             amiFamily: "Bottlerocket"
           }
         ),
