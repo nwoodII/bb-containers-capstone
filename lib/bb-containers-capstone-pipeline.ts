@@ -12,7 +12,6 @@ export default class BbContainersCapstonePipeline extends Construct {
     const account = props?.env?.account!;
     const region = props?.env?.region!;
     
-    //TODO: Test without this cluster again
     const mgnClusterProviderProps = {
       amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
       desiredSize: 1,
@@ -29,21 +28,6 @@ export default class BbContainersCapstonePipeline extends Construct {
       mgnClusterProviderProps
     );
     
-    const karpenterAddonProps = {
-      provisionerSpecs: {
-        'node.kubernetes.io/instance-type': ['t3.large','t3.medium'],
-        'topology.kubernetes.io/zone': ['us-east-1a'],
-        'kubernetes.io/arch': ['amd64'],
-        'karpenter.sh/capacity-type': ['spot']
-      },
-      subnetTags: {
-        'karpenter.sh/discovery': 'dev-blueprint'
-      },
-      securityGroupTags: {
-        'karpenter.sh/discovery': 'dev-blueprint'
-      }
-    }
-    
     const blueprint = blueprints.EksBlueprint.builder()
       .account(account)
       .region(region)
@@ -54,7 +38,22 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.NginxAddOn(),
         new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn(),
-        new blueprints.KarpenterAddOn(karpenterAddonProps),
+        new blueprints.KarpenterAddOn({
+            provisionerSpecs: {
+              'node.kubernetes.io/instance-type': ['t3.large','t3.medium'],
+              'topology.kubernetes.io/zone': ['us-east-1a'],
+              'kubernetes.io/arch': ['amd64'],
+              'karpenter.sh/capacity-type': ['spot']
+            },
+            subnetTags: {
+              'karpenter.sh/discovery': 'dev-blueprint'
+            },
+            securityGroupTags: {
+              'karpenter.sh/discovery': 'dev-blueprint'
+            },
+            amiFamily: "Bottlerocket"
+          }
+        ),
         //new blueprints.EbsCsiDriverAddOn(),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
@@ -62,7 +61,8 @@ export default class BbContainersCapstonePipeline extends Construct {
       )
       .teams(new TeamPlatform(account), new TeamApplication("team-mims", account));
 
-    const repoUrl = "https://github.com/nwoodII/argocd-example-apps.git";
+    //const repoUrl = "https://github.com/nwoodII/argocd-example-apps.git";
+    const repoUrl = "https://github.com/nwoodII/app-of-apps.git";
     
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
