@@ -38,8 +38,8 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.KarpenterAddOn({
             provisionerSpecs: {
               //'node.kubernetes.io/instance-type': ['t3.large','t3.medium'],
-              'topology.kubernetes.io/zone': ['us-east-1a'],
-              'kubernetes.io/arch': ['amd64'],
+              'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
+              'kubernetes.io/arch': ['amd64', 'arm64'],
               'karpenter.sh/capacity-type': ['spot']
             },
             subnetTags: {
