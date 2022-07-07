@@ -15,9 +15,6 @@ export default class BbContainersCapstonePipeline extends Construct {
     const mgnClusterProviderProps = {
       amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
       desiredSize: 1,
-      instanceTypes: [
-        new ec2.InstanceType("t3.large")
-      ],
       minSize: 1,
       maxSize: 10,
       nodeGroupCapacityType: eks.CapacityType.SPOT,
@@ -51,11 +48,11 @@ export default class BbContainersCapstonePipeline extends Construct {
             securityGroupTags: {
               'karpenter.sh/discovery': 'dev-blueprint'
             },
-            taints: [{
-               key: "workload",
-               value: "argocd",
-               effect: "NoSchedule",
-             }],
+            // taints: [{
+            //   key: "workload",
+            //   value: "bb-capstone",
+            //   effect: "NoSchedule",
+            // }],
             amiFamily: "Bottlerocket"
           }
         ),
