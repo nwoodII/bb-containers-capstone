@@ -37,7 +37,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.VpcCniAddOn(),
         new blueprints.KarpenterAddOn({
             provisionerSpecs: {
-              'node.kubernetes.io/instance-type': ['t3.large','t3.medium'],
+              'node.kubernetes.io/instance-type': ['t3.large','t3.medium', 'm5.2xlarge'],
               'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
               'kubernetes.io/arch': ['amd64', 'arm64'],
               'karpenter.sh/capacity-type': ['spot']
