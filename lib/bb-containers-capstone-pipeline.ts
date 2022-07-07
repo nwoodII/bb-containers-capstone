@@ -53,7 +53,7 @@ export default class BbContainersCapstonePipeline extends Construct {
             //   value: "bb-capstone",
             //   effect: "NoSchedule",
             // }],
-            amiFamily: "AL2"
+            amiFamily: "Bottlerocket"
           }
         ),
         //new blueprints.EbsCsiDriverAddOn(),
