@@ -16,7 +16,7 @@ export default class BbContainersCapstonePipeline extends Construct {
       amiType: eks.NodegroupAmiType.BOTTLEROCKET_X86_64,
       desiredSize: 1,
       instanceTypes: [
-        new ec2.InstanceType("t3.medium")
+        new ec2.InstanceType("t3.large")
       ],
       minSize: 1,
       maxSize: 10,
