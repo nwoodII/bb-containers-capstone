@@ -1,14 +1,16 @@
 import * as cdk from "aws-cdk-lib";
 import * as eks from "aws-cdk-lib/aws-eks";
 import * as blueprints from "@aws-quickstart/eks-blueprints";
+
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { TeamPlatform, TeamApplication } from "../teams";
 
+
 export default class BbContainersCapstonePipeline extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id);
-
+    
     const account = props?.env?.account!;
     const region = props?.env?.region!;
     
@@ -36,26 +38,20 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.CalicoAddOn(),
         new blueprints.VpcCniAddOn(),
         new blueprints.KarpenterAddOn({
-            provisionerSpecs: {
-              'node.kubernetes.io/instance-type': ['t3.large','t3.medium', 'm5.2xlarge'],
-              'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
-              'kubernetes.io/arch': ['amd64', 'arm64'],
-              'karpenter.sh/capacity-type': ['spot']
-            },
-            subnetTags: {
-              'karpenter.sh/discovery': 'dev-blueprint'
-            },
-            securityGroupTags: {
-              'karpenter.sh/discovery': 'dev-blueprint'
-            },
-            // taints: [{
-            //   key: "workload",
-            //   value: "bb-capstone",
-            //   effect: "NoSchedule",
-            // }],
-            amiFamily: "Bottlerocket"
-          }
-        ),
+          provisionerSpecs: {
+            //'node.kubernetes.io/instance-type': ['t3.large','t3.medium', 'm5.2xlarge'],
+            'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
+            'kubernetes.io/arch': ['amd64', 'arm64'],
+            'karpenter.sh/capacity-type': ['spot']
+          },
+          subnetTags: {
+            'karpenter.sh/discovery/dev-blueprint': '*'
+          },
+          securityGroupTags: {
+            'karpenter.sh/discovery/dev-blueprint': '*'
+          },
+          amiFamily: "Bottlerocket"
+        }),
         //new blueprints.EbsCsiDriverAddOn(),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
