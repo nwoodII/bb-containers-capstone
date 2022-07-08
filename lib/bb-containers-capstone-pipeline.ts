@@ -45,10 +45,9 @@ export default class BbContainersCapstonePipeline extends Construct {
             'karpenter.sh/capacity-type': ['spot']
           },
           subnetTags: {
-            'name': 'BbContainersCapstonePipeline-stack/dev/dev-blueprint/dev-blueprint-vpc/PrivateSubnet1'
+            'Name': 'BbContainersCapstonePipeline-stack/dev/dev-blueprint/dev-blueprint-vpc/PrivateSubnet*'
           },
           securityGroupTags: {
-            //'karpenter.sh/discovery/dev-blueprint': '*'
             "kubernetes.io/cluster/dev-blueprint": "owned",
           },
           amiFamily: "Bottlerocket"
