@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@aws-quickstart/eks-blueprints": "1.0.4",
+    "@rafaysystems/rafay-eks-blueprints-addon": "^0.0.2",
     "aws-cdk-lib": "2.25.0",
     "constructs": "^10.1.43",
     "source-map-support": "^0.5.21",

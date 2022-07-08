@@ -4,7 +4,7 @@ import * as blueprints from "@aws-quickstart/eks-blueprints";
 
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
-import { TeamPlatform, TeamApplication } from "../teams";
+import { TeamPlatform, TeamApplication, TeamBurnham, TeamRiker } from "../teams";
 
 
 export default class BbContainersCapstonePipeline extends Construct {
@@ -35,11 +35,10 @@ export default class BbContainersCapstonePipeline extends Construct {
         new blueprints.AppMeshAddOn(),
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.NginxAddOn(),
-        new blueprints.CalicoAddOn(),
+        new blueprints.CalicoOperatorAddOn(),
         new blueprints.VpcCniAddOn(),
         new blueprints.KarpenterAddOn({
           provisionerSpecs: {
-            //'node.kubernetes.io/instance-type': ['t3.large','t3.medium', 'm5.2xlarge'],
             'topology.kubernetes.io/zone': ['us-east-1a', 'us-east-1b', 'us-east-1c'],
             'kubernetes.io/arch': ['amd64', 'arm64'],
             'karpenter.sh/capacity-type': ['spot']
@@ -52,12 +51,17 @@ export default class BbContainersCapstonePipeline extends Construct {
           },
           amiFamily: "Bottlerocket"
         }),
-        //new blueprints.EbsCsiDriverAddOn(),
+        new blueprints.EbsCsiDriverAddOn(),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
       )
-      .teams(new TeamPlatform(account), new TeamApplication("team-mims", account));
+      .teams(
+        new TeamPlatform(account), 
+        new TeamApplication("team-mims", account), 
+        new TeamBurnham("team-burnham", account), 
+        new TeamRiker("team-riker", account)
+      );
 
     //const repoUrl = "https://github.com/nwoodII/argocd-example-apps.git";
     const repoUrl = "https://github.com/nwoodII/app-of-apps.git";

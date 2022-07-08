@@ -1,0 +1,34 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: team-burnham
+  name: allow-riker-to-burnham
+spec:
+  podSelector:
+    matchLabels:
+      app: guestbook-ui
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: guestbook-ui
+          namespaceSelector:
+            matchLabels:
+              name: team-riker
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: guestbook-ui
+          namespaceSelector:
+            matchLabels:
+              name: team-riker
+      ports:
+        - protocol: TCP
+          port: 80
