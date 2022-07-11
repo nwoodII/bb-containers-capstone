@@ -11,15 +11,14 @@ export class TeamBurnham extends ApplicationTeam {
             ],
             teamSecrets: [
                 {
-                    secretProvider: new blueprints.GenerateSecretManagerProvider('AuthPassword', 'auth-password'),
+                    secretProvider: new blueprints.GenerateSecretManagerProvider('AuthPassword', 'AuthPassword'),
                     kubernetesSecret: {
                         secretName: 'auth-password',
-                        // data: [
-                        //     {
-                        //         objectName: 'auth-password',
-                        //         key: 'password'
-                        //     }
-                        // ]
+                        data: [
+                            {
+                                key: 'password'
+                            }
+                        ]
                     }
                 },
                 {
