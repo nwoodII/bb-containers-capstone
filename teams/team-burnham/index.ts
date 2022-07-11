@@ -16,6 +16,7 @@ export class TeamBurnham extends ApplicationTeam {
                         secretName: 'auth-password',
                         data: [
                             {
+                                objectName: 'auth-password',
                                 key: 'password'
                             }
                         ]
@@ -24,7 +25,13 @@ export class TeamBurnham extends ApplicationTeam {
                 {
                     secretProvider: new blueprints.LookupSsmSecretByAttrs('GITHUB_TOKEN', 1),
                     kubernetesSecret: {
-                        secretName: 'github'
+                        secretName: 'github',
+                        data: [
+                            {
+                                objectName: 'github',
+                                key: 'GITHUB_TOKEN'
+                            }
+                        ]
                     }
                 }
             ]
