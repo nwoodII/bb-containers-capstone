@@ -64,20 +64,28 @@ export default class BbContainersCapstonePipeline extends Construct {
       );
 
     //const repoUrl = "https://github.com/nwoodII/argocd-example-apps.git";
-    const repoUrl = "https://github.com/nwoodII/app-of-apps.git";
+    const repoUrl = "https://github.com/nwoodII/eks-blueprints-workloads.git";
+    
+    // const bootstrapRepo: blueprints.ApplicationRepository = {
+    //   repoUrl,
+    //   credentialsSecretName: "github/token/argocd",
+    //   credentialsType: 'TOKEN',
+    //   targetRevision: 'master'
+    // };
     
     const bootstrapRepo: blueprints.ApplicationRepository = {
       repoUrl,
       credentialsSecretName: "github/token/argocd",
       credentialsType: 'TOKEN',
-      targetRevision: 'master'
-    };
+      targetRevision: 'main'
+    };    
 
     // HERE WE GENERATE THE ADDON CONFIGURATIONS
     const devBootstrapArgo = new blueprints.ArgoCDAddOn({
-      bootstrapRepo: {
-        ...bootstrapRepo
-      },
+       bootstrapRepo: {
+         ...bootstrapRepo,
+         path: "envs/test",
+       },
     });
     // const testBootstrapArgo = new blueprints.ArgoCDAddOn({
     //   bootstrapRepo: {
