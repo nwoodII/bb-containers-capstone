@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: guestbook-ui
+      app: nginx
   policyTypes:
     - Ingress
     - Egress
@@ -15,20 +15,11 @@ spec:
         - podSelector:
             matchLabels:
               app: guestbook-ui
-          namespaceSelector:
+        - namespaceSelector:
             matchLabels:
-              name: team-riker
-      ports:
-        - protocol: TCP
-          port: 80
-  egress:
-    - to:
-        - podSelector:
-            matchLabels:
-              app: guestbook-ui
-          namespaceSelector:
-            matchLabels:
-              name: team-riker
+              service: nginx
+        - ipBlock:
+            cidr: 10.0.0.0/16
       ports:
         - protocol: TCP
           port: 80
