@@ -51,7 +51,7 @@ export default class BbContainersCapstonePipeline extends Construct {
           },
           amiFamily: "Bottlerocket"
         }),
-        new blueprints.EbsCsiDriverAddOn('v1.8.0-eksbuild.0 '),
+        new blueprints.EbsCsiDriverAddOn(),
         new blueprints.KubeviousAddOn(),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
