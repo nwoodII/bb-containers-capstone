@@ -53,7 +53,8 @@ export default class BbContainersCapstonePipeline extends Construct {
         }),
         new blueprints.EbsCsiDriverAddOn('v1.8.0-eksbuild.0'),
         new blueprints.KubeviousAddOn({
-          ingressEnabled: true
+          ingressEnabled: true,
+          kubeviousServiceType: 'LoadBalancer'
         }),
         new blueprints.ContainerInsightsAddOn(),
         new blueprints.SecretsStoreAddOn()
