@@ -63,7 +63,7 @@ export default class BbContainersCapstonePipeline extends Construct {
         new TeamRiker("team-riker", account)
       );
 
-    const repoUrl = "https://github.com/nwoodII/argocd-example-apps.git";
+    const repoUrl = "https://github.com/nwoodII/app-of-apps.git";
     //const repoUrl = "https://github.com/nwoodII/eks-blueprints-workloads.git";
     
      const bootstrapRepo: blueprints.ApplicationRepository = {
