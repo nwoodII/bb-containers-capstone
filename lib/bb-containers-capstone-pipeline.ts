@@ -1,7 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import * as eks from "aws-cdk-lib/aws-eks";
 import * as blueprints from "@aws-quickstart/eks-blueprints";
-import { KubecostAddOn } from '@kubecost/kubecost-blueprints-addon';
+import { KubecostAddOn } from '@kubecost/kubecost-eks-blueprints-addon';
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { TeamPlatform, TeamApplication, TeamBurnham, TeamRiker } from "../teams";
