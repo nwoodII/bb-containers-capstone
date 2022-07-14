@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@aws-quickstart/eks-blueprints": "1.0.4",
+    "@kubecost/kubecost-eks-blueprints-addon": "^0.1.2",
     "@rafaysystems/rafay-eks-blueprints-addon": "^0.0.2",
     "aws-cdk-lib": "2.25.0",
     "constructs": "^10.1.43",
