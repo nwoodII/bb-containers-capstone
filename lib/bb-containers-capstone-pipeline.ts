@@ -88,7 +88,8 @@ export default class BbContainersCapstonePipeline extends Construct {
     // HERE WE GENERATE THE ADDON CONFIGURATIONS
     const devBootstrapArgo = new blueprints.ArgoCDAddOn({
        bootstrapRepo: {
-         ...bootstrapRepo
+         ...bootstrapRepo,
+         path: "multi-repo/apps/dev"
        },
     });
     // const testBootstrapArgo = new blueprints.ArgoCDAddOn({
