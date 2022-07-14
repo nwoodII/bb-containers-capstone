@@ -32,7 +32,10 @@ export default class BbContainersCapstonePipeline extends Construct {
       .region(region)
       .clusterProvider(clusterProvider) //TODO: Test without this cluster again
       .addOns(
-        new blueprints.AppMeshAddOn(),
+        new blueprints.AppMeshAddOn({
+          enableTracing: true, 
+          tracingProvider: "x-ray"
+        }),
         new blueprints.AwsLoadBalancerControllerAddOn(),
         new blueprints.NginxAddOn(),
         new blueprints.CalicoOperatorAddOn(),
@@ -63,9 +66,9 @@ export default class BbContainersCapstonePipeline extends Construct {
       )
       .teams(
         new TeamPlatform(account), 
-        new TeamApplication("team-mims", account), 
-        new TeamBurnham("team-burnham", account), 
-        new TeamRiker("team-riker", account)
+        new TeamApplication("mims", account), 
+        new TeamBurnham("burnham", account), 
+        new TeamRiker("riker", account)
       );
 
     //const repoUrl = "https://github.com/nwoodII/app-of-apps.git";

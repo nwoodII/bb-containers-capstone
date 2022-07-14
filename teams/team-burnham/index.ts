@@ -9,6 +9,9 @@ export class TeamBurnham extends ApplicationTeam {
             users: [
                 new ArnPrincipal(`arn:aws:iam::${accountID}:user/burnham`)
             ],
+            namespaceAnnotations: {
+                "appmesh.k8s.aws/sidecarInjectorWebhook": "enabled"
+            },
             teamSecrets: [
                 {
                     secretProvider: new blueprints.GenerateSecretManagerProvider('AuthPassword', 'auth-password'),
