@@ -1,0 +1,24 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: helm-guestbook # isolate the team-burnham namespace
+  name: allow-riker-to-helm-guestbook
+spec: #isolate app=nginx pods in the team-burnham namespace
+  podSelector:
+    matchLabels:
+      app: helm-guestbook
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress: ### Allow ingress connections to any pod with a namespace of  
+          ### name=team-riker in the team-burnham namespace on TCP Port 80
+    - from:
+      - namespaceSelector: # Any pod in a namespace with the label name=team-riker
+          matchLabels:
+            kubernetes.io/metadata.name: team-riker
+        podSelector:
+          matchLabels:
+            app: guestbook-ui
+      ports:
+        - protocol: TCP
+          port: 80              
