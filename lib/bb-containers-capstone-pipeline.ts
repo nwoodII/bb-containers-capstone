@@ -76,7 +76,7 @@ export default class BbContainersCapstonePipeline extends Construct {
        repoUrl,
        credentialsSecretName: "github/token/argocd",
        credentialsType: 'TOKEN',
-       targetRevision: 'master'
+       targetRevision: 'HEAD'
      };
     
     // const bootstrapRepo: blueprints.ApplicationRepository = {
