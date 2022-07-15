@@ -54,7 +54,7 @@ export default class BbContainersCapstonePipeline extends Construct {
           },
           amiFamily: "Bottlerocket"
         }),
-        new blueprints.EbsCsiDriverAddOn('v1.8.0-eksbuild.0'),
+        //new blueprints.EbsCsiDriverAddOn('v1.8.0-eksbuild.0'),
         new blueprints.KubeviousAddOn({
           ingressEnabled: true,
           kubeviousServiceType: 'LoadBalancer'
@@ -71,8 +71,6 @@ export default class BbContainersCapstonePipeline extends Construct {
         new TeamRiker("riker", account)
       );
 
-    //const repoUrl = "https://github.com/nwoodII/app-of-apps.git";
-    //const repoUrl = "https://github.com/nwoodII/eks-blueprints-workloads.git";
      const repoUrl = "https://github.com/nwoodII/capstone-apps.git";
      
      const bootstrapRepo: blueprints.ApplicationRepository = {
@@ -81,13 +79,6 @@ export default class BbContainersCapstonePipeline extends Construct {
        credentialsType: 'TOKEN',
        targetRevision: 'HEAD'
      };
-    
-    // const bootstrapRepo: blueprints.ApplicationRepository = {
-    //   repoUrl,
-    //   credentialsSecretName: "github/token/argocd",
-    //   credentialsType: 'TOKEN',
-    //   targetRevision: 'main'
-    // };    
 
     // HERE WE GENERATE THE ADDON CONFIGURATIONS
     const devBootstrapArgo = new blueprints.ArgoCDAddOn({
