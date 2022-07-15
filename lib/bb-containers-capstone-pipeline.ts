@@ -54,7 +54,7 @@ export default class BbContainersCapstonePipeline extends Construct {
           },
           amiFamily: "Bottlerocket"
         }),
-        //new blueprints.EbsCsiDriverAddOn('v1.8.0-eksbuild.0'),
+        new blueprints.EbsCsiDriverAddOn('v1.8.0-eksbuild.0'),
         new blueprints.KubeviousAddOn({
           ingressEnabled: true,
           kubeviousServiceType: 'LoadBalancer'
